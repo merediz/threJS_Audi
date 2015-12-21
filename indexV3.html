@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8>
+		<title>My first Three.js app</title>
+		<script src="js/three.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<style>
+			body { margin: 0; overflow: hidden;}
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script>
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+			// scene.fog=new THREE.Fog( 0xffffff, 0.015, 100 );
+			scene.fog=new THREE.FogExp2( 0xffffff, 0.015 );
+			// scene.fog.color.setHSL( 0.51, 0.6, 0.6 );
+
+			var renderer = new THREE.WebGLRenderer(/*{alpha:true}*/);
+			renderer.setClearColor( 0x000000 );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			// renderer.setClearColor( 0xffffff, 0);
+
+			var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+			// var material = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true } );
+			var material = new THREE.MeshLambertMaterial( { color: 0xFFFFFF} );
+			var cube = new THREE.Mesh( geometry, material );
+			cube.position.z=-20;
+			scene.add( cube );
+
+
+			var cubes=[];
+			var colours = [0xCD853F, 0x191970, 0xDAA520];
+			function addCubes () {
+				// var cube2 = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: colours[Math.floor(Math.random() * colours.length)], opacity: 0.4 } ) );
+				// var geometry2 = new THREE.BoxGeometry( 1, 1, 1 );
+				var geometry2 = new THREE.CylinderGeometry( 1, 1, .2, 6 );
+				// var material = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true } );
+				var material2 = new THREE.MeshLambertMaterial( { color: 0xFFFFFF,} );
+				var cube2 = new THREE.Mesh( geometry2, material2 );
+				scene.add( cube2 );
+				cube2.position.x=Math.abs(Math.random()*20)-10;
+				cube2.position.y=Math.abs(Math.random()*12)-6;
+				// cube2.position.z=Math.abs(Math.random()*5)-30;
+				// cube2.rotation.y=Math.abs(Math.random()*180);
+				// cube2.rotation.x=Math.abs(Math.random()*180);
+
+				cube2.mas=true;
+
+				cubes.push(cube2);
+			}
+
+			for (var i = 0; i <= 10; i++) {
+				addCubes ();
+			};
+
+
+			var pointLight_1 =new THREE.PointLight(0xFFFFFF);
+			pointLight_1.position.x=2;
+			pointLight_1.position.y=2;
+			pointLight_1.position.z=2;
+
+			scene.add(pointLight_1);
+
+
+			var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+			scene.add( light );
+
+			camera.position.z = 5;
+
+
+			camera.position.z = 5;
+
+			function render() {
+				requestAnimationFrame(render);
+				cube.rotation.x += 0.01;
+				cube.rotation.y += 0.01;
+				// camera.rotation.x += .01;
+				// camera.rotation.y += .09;	
+				// camera.rotation.z += .1;
+/*
+				for(var i in cubes){
+					// var mas=true;
+					if (cubes[i].position.z<-30) {
+						cubes[i].mas=false;
+					}
+					if(cubes[i].position.z>-3){
+						cubes[i].mas=true;
+					}
+					if (cubes[i].mas) {
+						cubes[i].position.z-=.05;
+						// console.log(1);
+					}else{
+						cubes[i].position.z+=.05;
+						// console.log(2);
+					}
+					cubes[i].rotation.x+=.05;
+					// cubes[i].rotation.y+=.05;
+
+				}*/
+				// console.log(cubes[0].position.z);
+				renderer.render( scene, camera );
+			}
+
+			render();
+			
+		</script>
+	</body>
+</html>

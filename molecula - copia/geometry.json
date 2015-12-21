@@ -1,0 +1,16 @@
+{
+	"metadata": {
+		"version": 4.4,
+		"type": "Geometry",
+		"generator": "Geometry.toJSON"
+	},
+	"uuid": "264D7CAE-FD76-4543-A278-117D7A0A19D0",
+	"type": "SphereGeometry",
+	"radius": 75,
+	"widthSegments": 32,
+	"heightSegments": 16,
+	"phiStart": 0,
+	"phiLength": 6.283185307179586,
+	"thetaStart": 0,
+	"thetaLength": 3.141592653589793
+}
