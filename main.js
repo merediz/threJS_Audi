@@ -87,6 +87,44 @@ function init() {
 	sphere = new THREE.Mesh( geometry, material );
 	sphere.position.y = -75;
 
+	// ------------------------------------------ ESFERA GRANDE
+	var manager = new THREE.LoadingManager();
+	manager.onProgress = function ( item, loaded, total ) {
+
+		console.log( item, loaded, total );
+
+	};
+	var texture = new THREE.Texture();
+	var loader = new THREE.ImageLoader( manager );
+					loader.load( 'materials/girl.jpg', function ( image ) {
+
+						texture.image = image;
+						texture.needsUpdate = true;
+
+	} );
+
+	// ------------------------------------------ model
+	
+	var loader = new THREE.OBJLoader( manager );
+	loader.load( 'exagono3D1.obj', function ( object ) {
+
+		object.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.material.map = texture;
+
+			}
+
+		} );
+
+		// object.position.y = - 80;
+		object.rotation.x = 90;
+		group.add( object );
+
+	} );
+
+
 
 	// ------------------------------------------ LUCES
 	
@@ -228,7 +266,7 @@ function addPhotos () {
 	var material2; 
 	var geometry2 = new THREE.BoxGeometry(40, 40, 1);
 	// material2 = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../materials/clouds.jpg') } );
-	material2 = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../materials/girl.jpg') } );
+	material2 = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('materials/girl.jpg') } );
 	counter = 0;
 	
 	var cube2 = new THREE.Mesh( geometry2, material2 );
