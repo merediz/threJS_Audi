@@ -193,7 +193,7 @@ function addAllPhotos () {
 function addCubes () {
 	var material2; 
 	var geometry2 = new THREE.CylinderGeometry( 20, 20, 2, 6 );
-	material2 = new THREE.MeshLambertMaterial( { color: 0xffffff } );
+	material2 = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
 
 	var cube2 = new THREE.Mesh( geometry2, material2 );
 	
@@ -215,7 +215,7 @@ function addCubes () {
 function addCubesOrdenados (pos) {
 	var material2; 
 	var geometry2 = new THREE.CylinderGeometry( 30, 30, 3, 6 );
-	material2 = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
+	material2 = new THREE.MeshLambertMaterial( { color: 0xffffff } );
 
 	var cube2 = new THREE.Mesh( geometry2, material2 );
 	
@@ -264,9 +264,14 @@ function addCubesOrdenados (pos) {
 
 function addPhotos () {
 	var material2; 
-	var geometry2 = new THREE.BoxGeometry(40, 40, 1);
+	var geometry2 = new THREE.BoxGeometry(40, 40, .001);
 	// material2 = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../materials/clouds.jpg') } );
+<<<<<<< HEAD:main.js
 	material2 = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('materials/girl.jpg') } );
+=======
+	material2 = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../materials/girl_bevel.png'), transparent: true, opacity: .99, color: 0xffffff  } );
+	// materialArray.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture('img/s2.png'), transparent: true, opacity: 0.9, color: 0xFF0000 }));
+>>>>>>> 4c3ef36f0c3a9f44802ccc9055808f9d9f7a0b07:molecula/main.js
 	counter = 0;
 	
 	var cube2 = new THREE.Mesh( geometry2, material2 );
