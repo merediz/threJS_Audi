@@ -5,7 +5,7 @@ var pointLight, ambientLight;
 
 // ********************************************* OBJETOS
 
-var cube, cubeBig, sphereBig, sphere, group;
+var cube, cubeBig, sphereBig, sphere, group, obj;
 var cubes=[];
 
 // ********************************************* OBJETOS
@@ -57,6 +57,13 @@ function init() {
 
 	scene.fog=new THREE.FogExp2( 0xffffff, 0.001 );
 
+	var manager = new THREE.LoadingManager();  // CONTROLA EVENTOS DE CARGA SOLO SE USA EN EL IMPORTADOR DEL MODELO
+	manager.onProgress = function ( item, loaded, total ) {
+
+		console.log( item, loaded, total );
+
+	};
+
 
 /* ******************************************************************* OBJECTOS */
 
@@ -68,32 +75,12 @@ function init() {
 	cubeBig = new THREE.Mesh( geometry, material );
 	// scene.add( cubeBig );
 
-	// ------------------------------------------ ESFERA GRANDE
+	
 
-	var geometry = new THREE.SphereGeometry( 80, 26, 36);
+	
 
-	var material = new THREE.MeshLambertMaterial( { color: 0xcc66ff} );
-
-	sphereBig = new THREE.Mesh( geometry, material );
-	sphereBig.position.y = 120;
-	sphereBig.position.z = 320;
-
-	//group.add( sphereBig );
-
-	var geometry = new THREE.SphereGeometry( 50, 26, 36);
-
-	var material = new THREE.MeshLambertMaterial( { color: 0xff6600 } );
-
-	sphere = new THREE.Mesh( geometry, material );
-	sphere.position.y = -75;
-
-	// ------------------------------------------ ESFERA GRANDE
-	var manager = new THREE.LoadingManager();
-	manager.onProgress = function ( item, loaded, total ) {
-
-		console.log( item, loaded, total );
-
-	};
+	// ------------------------------------------ IMPORTAR OBJ
+	
 	var texture = new THREE.Texture();
 	var loader = new THREE.ImageLoader( manager );
 					loader.load( 'materials/girl.jpg', function ( image ) {
@@ -103,10 +90,10 @@ function init() {
 
 	} );
 
-	// ------------------------------------------ model
+	// ------------------------------------------ OBJ
 	
 	var loader = new THREE.OBJLoader( manager );
-	loader.load( 'exagono3D1.obj', function ( object ) {
+	loader.load( 'exagono3D.obj', function ( object ) {
 
 		object.traverse( function ( child ) {
 
@@ -118,8 +105,9 @@ function init() {
 
 		} );
 
-		// object.position.y = - 80;
-		object.rotation.x = 90;
+		object.position.z = 80;
+		object.rotation.x = 1.6955;
+		obj = object;
 		group.add( object );
 
 	} );
@@ -142,7 +130,7 @@ function init() {
 	pointLight.position.z = 721;
 	scene.add( pointLight );
 
-	ambientLight = new THREE.AmbientLight( 0x404040 ); // soft white light
+	ambientLight = new THREE.AmbientLight( 0x909090 ); // soft white light
 	scene.add( ambientLight );
 
 
@@ -215,7 +203,7 @@ function addCubes () {
 function addCubesOrdenados (pos) {
 	var material2; 
 	var geometry2 = new THREE.CylinderGeometry( 30, 30, 3, 6 );
-	material2 = new THREE.MeshLambertMaterial( { color: 0xffffff } );
+	material2 = new THREE.MeshPhongMaterial( { color: 0xf4f4f4, specular: 0xcdcdcd, shininess: 40, shading: THREE.SmoothShading } );
 
 	var cube2 = new THREE.Mesh( geometry2, material2 );
 	
@@ -266,12 +254,9 @@ function addPhotos () {
 	var material2; 
 	var geometry2 = new THREE.BoxGeometry(40, 40, .001);
 	// material2 = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../materials/clouds.jpg') } );
-<<<<<<< HEAD:main.js
+
 	material2 = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('materials/girl.jpg') } );
-=======
-	material2 = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture('../materials/girl_bevel.png'), transparent: true, opacity: .99, color: 0xffffff  } );
-	// materialArray.push(new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture('img/s2.png'), transparent: true, opacity: 0.9, color: 0xFF0000 }));
->>>>>>> 4c3ef36f0c3a9f44802ccc9055808f9d9f7a0b07:molecula/main.js
+
 	counter = 0;
 	
 	var cube2 = new THREE.Mesh( geometry2, material2 );
@@ -505,7 +490,7 @@ function cambiaColor (from,color,cual) {
 	 		//var rgb="rgb(0, 255, 0)";
 	 		var rgb=$("body").get()[0].style.backgroundColor;
 	 		var desde=rgb.indexOf("(")+1;
-	 		var hasta=(rgb.indexOf(")"));
+	 		var hasta=( rgb.indexOf(")") );
 	 		var rgbArr=rgb.substring(desde,hasta).split(",")
 	 		var rgbToSend=rgbArr[0]+rgbArr[1]+rgbArr[2];
 	 		console.log(rgbToSend,desde,hasta)
@@ -515,7 +500,7 @@ function cambiaColor (from,color,cual) {
 	 		cual.material.color.r=rgbArr[0]/100;
 	 		cual.material.color.g=rgbArr[1]/100;
 	 		cual.material.color.b=rgbArr[2]/100;
-	         //console.log(rgb,rgb,rgbArr[0],rgbArr[1],rgbArr[2]);
+	        //console.log(rgb,rgb,rgbArr[0],rgbArr[1],rgbArr[2]);
 	     }
 }
 // cambiaColor(0xffffff);
@@ -537,7 +522,6 @@ function toBlack () {
 
 }
 
-
 /*Viaja a Foto*/
 function viajaToFoto () {
 	targetRotationX=0;
@@ -552,5 +536,4 @@ function viajaAfuera () {
 	tweenCamera(800,-400,0);
 	ordena()	
 }
-
 
